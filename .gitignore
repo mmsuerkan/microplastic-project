@@ -1,0 +1,19 @@
+# Images
+images/
+
+# Videos
+*.mp4
+*.avi
+*.mov
+
+# Output results (keep CSVs and analysis PNGs)
+output_results/*.jpg
+output_results/*.mp4
+
+# Node modules
+node_modules/
+
+# IDE
+.idea/
+*.pyc
+__pycache__/

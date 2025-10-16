@@ -1,7 +1,7 @@
 import cv2
 import os
 
-def create_video_from_frames(frames_dir, output_video_path, fps=30):
+def create_video_from_frames(frames_dir, output_video_path, fps=50):
     frames = [os.path.join(frames_dir, frame) for frame in sorted(os.listdir(frames_dir)) if frame.endswith(".jpg")]
     if not frames:
         print("No frames found in the directory.")
