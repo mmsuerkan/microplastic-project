@@ -1,0 +1,190 @@
+PROJE RAPORU: Mikroplastik Parcacik Takip ve Analiz Sistemi
+============================================================
+
+1. PROJE TANIMI
+---------------
+TUBITAK 1001 projesi: "Duzenli ve Duzensiz Sekilli Mikroplastik Parcaciklarin Cokelme Hizlarinin Deneysel, Sayisal ve Yapay Zeka Yontemleri ile Arastirilmasi"
+
+- PI: Doc.Dr. Asli Numanoglu Genc (TED Universitesi)
+- 4 Is Paketi (IP-1 ile IP-4)
+- IP-4: Derin ogrenme ile sekil faktoru gelistirme
+
+
+2. VERI SETI
+------------
+Deney sayisi: ~1500 video
+
+Veri dagilimi (Excel'den):
+
+Kategori     | MAK  | ANG
+-------------|------|-----
+PLA C        | 84   | 86
+PLA CUBE     | 83   | 84
+WSP          | 77   | 72
+BSP          | 74   | 73
+RESIN        | 140  | 137
+HC           | 66   | 64
+C            | 57   | 55
+ABS C        | 31   | 36
+ABS CUBE     | 25   | 31
+ABS HC       | 20   | 25
+PS           | 16   | 15
+
+Malzeme dagilimi:
+
+Malzeme      | Adet
+-------------|------
+Plexiglass   | ~493
+ABS          | ~125
+RESIN        | ~80
+PLA          | ~51
+PS           | 2
+
+
+3. OTOMATIK TAKIP SISTEMI (auto_particle_tracker.py)
+----------------------------------------------------
+Yontem: Blob tracking + frame farki (gercek optical flow degil)
+
+Ciktilar:
+- auto_tracking_results.csv - Frame bazli detayli veri
+- summary.csv - Ozet metrikler
+- auto_tracked_path.jpg - Yol gorseli
+- optical_flow_vectors.png - 6 grafikli analiz
+
+Grafikler:
+1. Optik Akis Vektor Alani
+2. Yatay ve Dikey Hiz (m/s)
+3. FFT - Yatay Salinim (dX) + dominant frekans
+4. Hareket Buyuklugu (Magnitude)
+5. Parcacik Yolu
+6. FFT - Dikey Salinim (dY) + dominant frekans
+
+
+4. HESAPLANAN METRIKLER
+-----------------------
+Mean Magnitude (Ortalama Hareket Yogunlugu):
+
+    Magnitude = sqrt(dX^2 + dY^2)
+    Mean Magnitude = SUM(sqrt(dX^2 + dY^2)) / N
+
+Hiz hesabi (optical flow'dan):
+
+    Hiz (m/s) = dY (piksel/frame) x FPS x (metre/piksel)
+
+Ornek sonuclar:
+
+Deney        | Dikey (px) | Hiz (cm/s) | Mean Mag
+-------------|------------|------------|----------
+BSP-1        | 685        | 5.79       | 2.88
+BSP-5        | 687        | 5.84       | 2.88
+C-2          | 687        | 4.24       | 2.64
+ABS-C-7      | 594        | 6.33       | 2.82
+RESIN-SP-2   | 532        | 18.75      | 8.51
+RESIN-CUBE-2 | 607        | 13.97      | 6.64
+
+Resin parcaciklar (8.5 px/frame) Plexiglass'tan (2.9 px/frame) cok daha hizli.
+
+
+5. OPTICAL FLOW vs GELENEKSEL YONTEM
+------------------------------------
+                  | Optical Flow      | Blob Tracking
+------------------|-------------------|---------------
+Hiz               | Yavas             | Hizli
+Dogruluk          | Alt-piksel        | Piksel
+Seffaf parcacik   | Zor               | Daha kolay
+Hesaplama         | Yuksek            | Dusuk
+
+Alt-piksel vs Piksel hassasiyeti:
+- Piksel: (520, 340) -> tam sayi, hareket 1, 2, 3 piksel
+- Alt-piksel: (520.45, 340.78) -> ondalikli, hareket 0.3, 1.7, 2.15 piksel
+
+Sonuc: Senin veri setinde optical flow'un gercek avantaji yok. Blob tracking + dX/dY yeterli.
+
+
+6. ANN MODELI
+-------------
+Girdiler (deney oncesi bilinen - manuel olcum):
+- a, b, c (mm)
+- Malzeme (Plexiglass, ABS, Resin...)
+- Opsiyonel: Sekil kodu
+
+Ciktilar (deneyden olculen):
+- Settling velocity (m/s)
+- Mean Magnitude
+- FFT dominant frekansi
+- Yatay sapma
+
+Sekil kodu tanimlama:
+
+1. Kategorik (one-hot):
+   BSP  -> [1,0,0,0,0,0]
+   C    -> [0,1,0,0,0,0]
+
+2. Matematiksel (onerilen):
+   Kuresellik = (pi^(1/3) * (6V)^(2/3)) / A
+   Aspect ratio = a/b, b/c
+
+Veri yeterliligi:
+- Genel model icin: Evet
+- PS (2 deney): Yetersiz
+- Bazi kombinasyonlar (ABS HC: 20): Az
+
+
+7. SANAL VERI URETIMI
+---------------------
+1. Fizik tabanli augmentation:
+   Gercek: a=3.2, b=2.1, c=2.1, hiz=0.058
+   Sanal:  a=3.2+-0.1, b=2.1+-0.1, c=2.1+-0.1, hiz=0.058+-0.005
+
+2. Yogunluk varyasyonu:
+   yogunluk_aralik = {
+       "Plexiglass": (1170, 1200),
+       "ABS": (1020, 1080),
+       "Resin": (1100, 1250),
+       "PLA": (1240, 1270),
+       "PS": (1040, 1060)
+   }
+   rho = random.uniform(*yogunluk_aralik[malzeme])
+   hiz_new = hiz * (rho / referans_yogunluk)
+
+3. Duzensiz parcacik uretimi (kup bukme):
+   def deforme_kup(a, b, c, deformasyon_orani=0.2):
+       a_new = a * (1 + random.uniform(-0.2, 0.2))
+       b_new = b * (1 + random.uniform(-0.2, 0.2))
+       c_new = c * (1 + random.uniform(-0.2, 0.2))
+       aci_sapma = random.uniform(-15, 15)  # derece
+       return a_new, b_new, c_new, aci_sapma
+
+   Orijinal kup:    4.0 x 4.0 x 4.0, kuresellik=0.806
+   Deforme 1:       4.3 x 3.8 x 4.1, aci=+7, kuresellik=0.72
+
+
+8. ISLENEN DENEYLER
+-------------------
+processed_results/ klasorunde:
+- BSP-1        [OK]
+- BSP-5        [OK]
+- C-2          [OK]
+- ABS-C-7      [OK]
+- ABS-C-8      [OK]
+- ABS-C-13     [OK]
+- ABS-C-14     [PARTIAL - erken kayboldu]
+- ABS-C-17     [OK]
+- ABS-CUBE-6   [OK]
+- ABS-CUBE-12  [OK]
+- RESIN-SP-2   [OK]
+- RESIN-CUBE-2 [OK]
+
+
+9. SONRAKI ADIMLAR
+------------------
+1. Batch islem - 1500 videoyu otomatik isle
+2. Excel ile birlestir (boyut + hiz)
+3. ANN modeli egit
+4. Sanal veri uret (augmentation)
+5. Yeni parcacik icin hiz tahmini
+
+
+============================================================
+Rapor Tarihi: 2025-12-04
+============================================================

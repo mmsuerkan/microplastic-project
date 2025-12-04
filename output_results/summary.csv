@@ -1,0 +1,15 @@
+Metrik,Deger,Birim
+Video,ABS-C-7.mp4,
+Toplam Frame,225,frame
+Video Suresi,4.50,saniye
+Baslangic X,883,piksel
+Baslangic Y,137,piksel
+Bitis X,872,piksel
+Bitis Y,731,piksel
+Dikey Hareket,594,piksel
+Yatay Sapma,-11,piksel
+Mean Magnitude,2.8185,px/frame
+Ortalama dX,0.0168,px/frame
+Ortalama dY,2.6686,px/frame
+Tahmini Hiz,0.0633,m/s
+Tahmini Hiz,6.33,cm/s
