@@ -22,6 +22,15 @@ nul
 *.txt
 !requirements.txt
 
+# One-time utility scripts
+copy_videos_to_ssd.py
+fix_parallel.py
+fix_wrong_videos.py
+fix_wrong_videos_v2.py
+generate_json.py
+move_not_found_to_success.py
+upload_missing_videos.py
+
 # Node modules
 node_modules/
 
