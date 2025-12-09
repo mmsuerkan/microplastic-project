@@ -10,6 +10,18 @@ images/
 output_results/*.jpg
 output_results/*.mp4
 
+# Processed results (stored in S3)
+processed_results/
+temp_output/
+
+# Source videos
+source_videos/
+
+# Temporary files
+nul
+*.txt
+!requirements.txt
+
 # Node modules
 node_modules/
 
