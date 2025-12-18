@@ -2,20 +2,23 @@
 
 ## En İyi Model ⭐
 
-**`settling_velocity_nn.pth`** - BPNN (Neural Network)
-- CV R² = **0.80**
-- Veri: 966 deney (RESIN A=9 çıkarılmış)
-- RMSE: ~1 cm/s
+**Ensemble (RF + NN)** - CV R² = **0.84**
+- Random Forest: CV R² = 0.844
+- Neural Network: CV R² = 0.785
+- Veri: 966 deney (RESIN outlier çıkarılmış)
+- RMSE: ~0.89 cm/s
+- Teorik limitin %95.6'sı
 
 ## Dosyalar
 
 | Dosya | Açıklama |
 |-------|----------|
-| `settling_velocity_nn.pth` | **En iyi model** (CV R²=0.80) ⭐ |
-| `settling_velocity_nn_v2v3.pth` | V2/V3 eklendi (CV R²=0.64) - kullanma |
-| `ml_neural_network.py` | BPNN eğitim scripti |
-| `ml_full_model_v2.py` | RF + XGBoost baseline |
-| `train_with_v2v3.py` | V2/V3 denemesi (başarısız) |
+| `ensemble_rf.joblib` | Random Forest model ⭐ |
+| `ensemble_nn.pth` | Neural Network model ⭐ |
+| `ensemble_meta.joblib` | Meta bilgiler |
+| `predict.py` | **Kolay tahmin scripti** ⭐ |
+| `ensemble_model.py` | Ensemble eğitim scripti |
+| `settling_velocity_nn.pth` | Sadece NN (CV R²=0.80) |
 | `ml_data_full_v2.csv` | Eğitim verisi (1078 satır) |
 
 ## Model Mimarisi
@@ -45,23 +48,26 @@ Dense(1) → Output (velocity m/s)
 
 ## Kullanım
 
+### Basit Kullanım
 ```python
-import torch
-import numpy as np
-from sklearn.preprocessing import StandardScaler
+from predict import predict_velocity
 
-# Model yükle
-checkpoint = torch.load('settling_velocity_nn.pth')
-model.load_state_dict(checkpoint['model_state'])
+# Tek parçacık tahmini (cm/s döner)
+v = predict_velocity(a=3, b=3, c=3, density=1050)
+print(f"Hız: {v:.2f} cm/s")
+```
 
-# Scaler
-scaler = StandardScaler()
-scaler.mean_ = checkpoint['scaler_mean']
-scaler.scale_ = checkpoint['scaler_scale']
+### Detaylı Kullanım
+```python
+from predict import EnsemblePredictor
 
-# Tahmin
-X_scaled = scaler.transform(X_new)
-velocity = model(torch.FloatTensor(X_scaled)).squeeze().detach().numpy()
+predictor = EnsemblePredictor()
+predictor.load()
+
+# DataFrame ile tahmin
+import pandas as pd
+df = pd.DataFrame([...])
+velocities = predictor.predict(df, method='ensemble')  # veya 'rf', 'nn'
 ```
 
 ## Notlar
