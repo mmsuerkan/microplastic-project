@@ -51,7 +51,8 @@ def scan_experiments():
     success_dir = os.path.join(PROCESSED_DIR, "success")
     if os.path.exists(success_dir):
         for root, dirs, files in os.walk(success_dir):
-            if "auto_tracking_results.csv" in files:
+            # Sadece output_video.mp4 olan deneyleri dahil et
+            if "auto_tracking_results.csv" in files and "output_video.mp4" in files:
                 rel_path = os.path.relpath(root, PROCESSED_DIR).replace('\\', '/')
                 parts = rel_path.split('/')
                 # success/tarih/view/repeat/category/code
@@ -90,7 +91,8 @@ def scan_experiments():
                 continue
 
             for root, dirs, files in os.walk(reason_path):
-                if "auto_tracking_results.csv" in files:
+                # Sadece output_video.mp4 olan deneyleri dahil et
+                if "auto_tracking_results.csv" in files and "output_video.mp4" in files:
                     rel_path = os.path.relpath(root, PROCESSED_DIR).replace('\\', '/')
                     parts = rel_path.split('/')
                     # fail/reason/tarih/view/repeat/category/code

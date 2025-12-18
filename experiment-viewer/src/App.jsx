@@ -12,16 +12,27 @@ function App() {
   const [error, setError] = useState(null)
   const [videoLoading, setVideoLoading] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [overrides, setOverrides] = useState({})
+  const [overrides, setOverrides] = useState(() => {
+    const saved = localStorage.getItem('microtrack_overrides')
+    return saved ? JSON.parse(saved) : {}
+  })
+  const [reanalyzeList, setReanalyzeList] = useState(() => {
+    const saved = localStorage.getItem('microtrack_reanalyze')
+    return saved ? JSON.parse(saved) : {}
+  })
 
   useEffect(() => {
     Promise.all([
       fetch(S3_BASE_URL + '/experiments.json').then(r => r.json()),
-      fetch(S3_BASE_URL + '/overrides.json').then(r => r.json()).catch(() => ({}))
-    ]).then(([data, overridesData]) => {
+      fetch(S3_BASE_URL + '/overrides.json').then(r => r.json()).catch(() => ({})),
+      fetch(S3_BASE_URL + '/reanalyze_list.json').then(r => r.json()).catch(() => ({}))
+    ]).then(([data, overridesData, reanalyzeData]) => {
       setExperiments(data.experiments || [])
       setStats({ total: data.total || 0, success: data.success || 0, fail: data.fail || 0 })
-      setOverrides(overridesData || {})
+      const localOverrides = JSON.parse(localStorage.getItem('microtrack_overrides') || '{}')
+      const localReanalyze = JSON.parse(localStorage.getItem('microtrack_reanalyze') || '{}')
+      setOverrides({ ...overridesData, ...localOverrides })
+      setReanalyzeList({ ...reanalyzeData, ...localReanalyze })
       setLoading(false)
     }).catch(err => {
       console.error('Hata:', err)
@@ -29,6 +40,14 @@ function App() {
       setLoading(false)
     })
   }, [])
+
+  useEffect(() => {
+    localStorage.setItem('microtrack_overrides', JSON.stringify(overrides))
+  }, [overrides])
+
+  useEffect(() => {
+    localStorage.setItem('microtrack_reanalyze', JSON.stringify(reanalyzeList))
+  }, [reanalyzeList])
 
   useEffect(() => { if (selected) setVideoLoading(true) }, [selected])
 
@@ -39,12 +58,20 @@ function App() {
   }
 
   const isOverridden = (exp) => overrides[exp.id] !== undefined
+  const isMarkedForReanalyze = (exp) => reanalyzeList[exp.id] !== undefined
 
   const toggleOverride = (exp) => {
     const newOverrides = { ...overrides }
     if (overrides[exp.id]) { delete newOverrides[exp.id] }
     else { newOverrides[exp.id] = exp.status === 'fail' ? 'success' : 'fail' }
     setOverrides(newOverrides)
+  }
+
+  const toggleReanalyze = (exp) => {
+    const newList = { ...reanalyzeList }
+    if (reanalyzeList[exp.id]) { delete newList[exp.id] }
+    else { newList[exp.id] = { path: exp.path, date: exp.date, view: exp.view, repeat: exp.repeat, category: exp.category, code: exp.code, fail_reason: exp.fail_reason, added_at: new Date().toISOString() } }
+    setReanalyzeList(newList)
   }
 
   const exportOverrides = () => {
@@ -54,6 +81,17 @@ function App() {
     const link = document.createElement('a')
     link.href = url
     link.download = 'overrides.json'
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const exportReanalyzeList = () => {
+    const json = JSON.stringify(reanalyzeList, null, 2)
+    const blob = new Blob([json], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'reanalyze_list.json'
     link.click()
     URL.revokeObjectURL(url)
   }
@@ -79,6 +117,7 @@ function App() {
   const failReasons = experiments.filter(e => e.status === 'fail').reduce((acc, e) => { acc[e.fail_reason] = (acc[e.fail_reason] || 0) + 1; return acc }, {})
 
   const overrideCount = Object.keys(overrides).length
+  const reanalyzeCount = Object.keys(reanalyzeList).length
   const effectiveStats = {
     total: stats.total,
     success: stats.success + Object.values(overrides).filter(v => v === 'success').length - Object.values(overrides).filter(v => v === 'fail').length,
@@ -113,6 +152,7 @@ function App() {
           <div className="stat-item success"><span className="stat-value">{effectiveStats.success}</span><span className="stat-label">Basarili</span><span className="stat-percent">{effectiveStats.total > 0 ? ((effectiveStats.success/effectiveStats.total)*100).toFixed(0) : 0}%</span></div>
           <div className="stat-item fail"><span className="stat-value">{effectiveStats.fail}</span><span className="stat-label">Basarisiz</span><span className="stat-percent">{effectiveStats.total > 0 ? ((effectiveStats.fail/effectiveStats.total)*100).toFixed(0) : 0}%</span></div>
           {overrideCount > 0 && (<div className="stat-item override"><span className="stat-value">{overrideCount}</span><span className="stat-label">Duzeltme</span><button className="export-override-btn" onClick={exportOverrides} title="Duzeltmeleri indir">↓</button></div>)}
+          {reanalyzeCount > 0 && (<div className="stat-item reanalyze"><span className="stat-value">{reanalyzeCount}</span><span className="stat-label">Tekrar Analiz</span><button className="export-reanalyze-btn" onClick={exportReanalyzeList} title="Listeyi indir">↓</button></div>)}
         </div>
       </header>
 
@@ -164,6 +204,7 @@ function App() {
                   <span className="info-tag"><b>Gorus:</b> {selected.view}</span>
                   <span className="info-tag"><b>Tekrar:</b> {selected.repeat}</span>
                   <button className={'override-btn ' + (isOverridden(selected) ? 'active' : '')} onClick={(e) => { e.stopPropagation(); toggleOverride(selected); }}>{isOverridden(selected) ? '↩ Geri Al' : (selected.status === 'fail' ? '✓ Basarili Isaretle' : '✗ Basarisiz Isaretle')}</button>
+                  <button className={'reanalyze-btn ' + (isMarkedForReanalyze(selected) ? 'active' : '')} onClick={(e) => { e.stopPropagation(); toggleReanalyze(selected); }}>{isMarkedForReanalyze(selected) ? '↩ Listeden Cikar' : '🔄 Tekrar Analiz Edilsin'}</button>
                 </div>
               </div>
               <div className="detail-grid-2x2">

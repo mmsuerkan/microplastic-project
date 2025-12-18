@@ -307,9 +307,10 @@ def auto_track_particle(video_path, output_dir="output_results", show_video=True
     end_y = path_points[-1][1]
     vertical_pixels = end_y - start_y
 
-    # Piksel/metre orani
-    KNOWN_DISTANCE_M = 0.285
-    KNOWN_DISTANCE_PX = vertical_pixels
+    # Piksel/metre orani - kolon yuksekligi 28.5 cm, goruntuDeki piksel yuksekligi
+    COLUMN_HEIGHT_M = 0.285  # 28.5 cm
+    FRAME_HEIGHT_PX = height  # Video frame yuksekligi (piksel)
+    PIXELS_PER_METER = FRAME_HEIGHT_PX / COLUMN_HEIGHT_M
 
     # Optik akis analizi
     if vector_data:
@@ -321,25 +322,35 @@ def auto_track_particle(video_path, output_dir="output_results", show_video=True
         mean_magnitude = 0
         mean_dy = 0
 
-    # Hiz hesabi
+    # Hiz hesabi - gercek kat edilen mesafe ve gercek takip suresi
     video_duration = total_frames / fps
-    speed_mps = KNOWN_DISTANCE_M / video_duration if video_duration > 0 else 0
+    tracking_frames = len(path_points)
+    tracking_duration = tracking_frames / fps  # Parcacigin takip edildigi sure
+
+    # Gercek kat edilen dikey mesafe (metre)
+    actual_distance_m = abs(vertical_pixels) / PIXELS_PER_METER
+
+    # Hiz = kat edilen mesafe / takip suresi
+    speed_mps = actual_distance_m / tracking_duration if tracking_duration > 0 else 0
 
     results = {
         'video_path': video_path,
         'total_frames': frame_count,
         'tracking_time': total_time,
         'video_duration': video_duration,
+        'tracking_duration': tracking_duration,
         'start_pos': path_points[0],
         'end_pos': path_points[-1],
         'vertical_pixels': vertical_pixels,
+        'actual_distance_m': actual_distance_m,
         'horizontal_drift': path_points[-1][0] - path_points[0][0],
         'speed_mps': speed_mps,
         'mean_magnitude': mean_magnitude,
         'mean_dy': mean_dy,
         'path_points': path_points,
         'vector_data': vector_data,
-        'detection_frame': detection_frame  # V3: Hangi frame'de bulundu
+        'detection_frame': detection_frame,  # V3: Hangi frame'de bulundu
+        'pixels_per_meter': PIXELS_PER_METER
     }
 
     # Sonuclari yazdir
@@ -349,11 +360,12 @@ def auto_track_particle(video_path, output_dir="output_results", show_video=True
     print(f"Tespit Frame: {detection_frame}")
     print(f"Toplam Frame: {frame_count}")
     print(f"Video Suresi: {video_duration:.2f} s")
-    print(f"Dikey Hareket: {vertical_pixels} piksel")
+    print(f"Takip Suresi: {tracking_duration:.2f} s ({tracking_frames} frame)")
+    print(f"Dikey Hareket: {vertical_pixels} piksel ({actual_distance_m*100:.2f} cm)")
     print(f"Yatay Sapma: {results['horizontal_drift']} piksel")
     print(f"Ortalama Hareket Yogunlugu: {mean_magnitude:.4f} px/frame")
     print(f"Ortalama dY: {mean_dy:.2f} px/frame")
-    print(f"Tahmini Hiz: {speed_mps:.4f} m/s ({speed_mps*100:.2f} cm/s)")
+    print(f"Hiz: {speed_mps:.4f} m/s ({speed_mps*100:.2f} cm/s)")
     print(f"{'='*50}")
 
     # CSV kaydet
@@ -375,16 +387,19 @@ def auto_track_particle(video_path, output_dir="output_results", show_video=True
         writer.writerow(['Tracker Version', 'V3', ''])
         writer.writerow(['Tespit Frame', detection_frame, 'frame'])
         writer.writerow(['Toplam Frame', frame_count, 'frame'])
+        writer.writerow(['Takip Frame', tracking_frames, 'frame'])
         writer.writerow(['Video Suresi', f'{video_duration:.2f}', 'saniye'])
+        writer.writerow(['Takip Suresi', f'{tracking_duration:.2f}', 'saniye'])
         writer.writerow(['Baslangic X', path_points[0][0], 'piksel'])
         writer.writerow(['Baslangic Y', path_points[0][1], 'piksel'])
         writer.writerow(['Bitis X', path_points[-1][0], 'piksel'])
         writer.writerow(['Bitis Y', path_points[-1][1], 'piksel'])
         writer.writerow(['Dikey Hareket', vertical_pixels, 'piksel'])
+        writer.writerow(['Kat Edilen Mesafe', f'{actual_distance_m*100:.2f}', 'cm'])
         writer.writerow(['Yatay Sapma', results['horizontal_drift'], 'piksel'])
         writer.writerow(['Mean Magnitude', f'{mean_magnitude:.4f}', 'px/frame'])
         writer.writerow(['Ortalama dY', f'{mean_dy:.4f}', 'px/frame'])
-        writer.writerow(['Tahmini Hiz', f'{speed_mps:.4f}', 'm/s'])
+        writer.writerow(['Hiz', f'{speed_mps*100:.2f}', 'cm/s'])
     print(f"Ozet kaydedildi: {summary_path}")
 
     # Yol gorseli kaydet

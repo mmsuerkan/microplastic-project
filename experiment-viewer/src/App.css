@@ -1000,3 +1000,51 @@ body {
 .override-btn.active:hover {
   background: rgba(155, 89, 182, 0.2);
 }
+
+/* Reanalyze styles */
+.stat-item.reanalyze {
+  background: linear-gradient(135deg, rgba(241, 196, 15, 0.2), rgba(243, 156, 18, 0.2));
+  border: 1px solid var(--accent-yellow);
+}
+.stat-item.reanalyze .stat-value { color: var(--accent-yellow); }
+.export-reanalyze-btn {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  background: var(--accent-yellow);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 4px;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.export-reanalyze-btn:hover { background: var(--accent-orange); }
+
+.reanalyze-btn {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--accent-yellow);
+  background: rgba(241, 196, 15, 0.1);
+  color: var(--accent-yellow);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reanalyze-btn:hover {
+  background: rgba(241, 196, 15, 0.2);
+  transform: translateY(-1px);
+}
+.reanalyze-btn.active {
+  border-color: var(--accent-orange);
+  background: rgba(230, 126, 34, 0.1);
+  color: var(--accent-orange);
+}
+.reanalyze-btn.active:hover {
+  background: rgba(230, 126, 34, 0.2);
+}
