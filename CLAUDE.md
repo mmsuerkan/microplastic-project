@@ -147,3 +147,93 @@ python batch_processor_full.py
 Batch processor sonrası experiments.json'a yeni deneyler eklenmeli:
 - `ml_models/prepare_training_data.py` - Training data hazırla
 - `ml_models/train_particle_avg.py` - Model eğit (parçacık ortalaması ile)
+
+---
+
+## TÜBİTAK 1001 Analizi (2025-01-29)
+
+### Proje Dokümanı
+- `basvuru_formu/1001_basvuru_formu-Genc-TEDU-Eylul-2022 (8).docx`
+
+### İş Paketleri Durumu
+
+| İP | Hedef | Mevcut Durum | Durum |
+|----|-------|--------------|-------|
+| İP-1 | MP parçacık hazırlama | 240 parçacık, 7 şekil | ✅ |
+| İP-2 | EPE < 3-4 piksel | **0.47 piksel** | ✅ |
+| İP-2 | CD-Re grafikleri | Yapıldı | ✅ |
+| İP-3 | CFD simülasyonları | Kod yok | ❌ |
+| İP-4 | RMSE < %0.2 | %13 (hedef çok agresif) | ⚠️ |
+| İP-4 | MVAF 1.0±5% | 1.03 (3% hata) | ✅ |
+| İP-4 | TVE < %5 | %17 | ❌ |
+
+### EPE (End Point Error) Analizi
+- **Klasör:** `epe_analysis/`
+- **Sonuç:** Ortalama EPE = 0.47 piksel (Hedef: 3-4 piksel) ✅
+- **Yöntem:** Centroid tracking ile displacement vektörleri (dX, dY)
+- Magnitude = √(dX² + dY²) → "optik akış yoğunluğu" olarak kullanılabilir
+
+**Dosyalar:**
+- `epe_analysis/epe_analysis_particle.csv` - 240 parçacık EPE
+- `epe_analysis/epe_analysis_visualization.png` - EPE grafikleri
+
+### Re-CD Analizi
+**Formüller:**
+```python
+# Reynolds sayısı
+Re = ρf × V × d_eq / μ
+# d_eq = (a × b × c)^(1/3)  # geometric mean
+
+# Sürükleme katsayısı
+CD = 4/3 × (ρp - ρf) × g × d / (ρf × V²)
+
+# Sabitler
+ρf = 998 kg/m³, μ = 0.001 Pa.s, g = 9.81 m/s²
+```
+
+**Sonuçlar:**
+- Re aralığı: 41 - 965
+- CD aralığı: 0.10 - 21.82
+- Dosya: `epe_analysis/re_cd_analysis.csv`
+
+### Göğüş et al. (2001) Şekil Faktörü
+**Referans:** ASCE J. Hydraulic Engineering, Vol. 127, No. 10
+
+**Formüller (Table 3):**
+```python
+# Transformed dimensions
+Cube: a1=√2×l, b1=√2×l, c1=l
+Cylinder: a1=√2×d, b1=√2×d, c1=h
+Wedge: a1=√3×l, b1=2√(2/3)×l, c1=l/√2
+Box: a1=√(l1²+l2²), b1=2l1l2/√(l1²+l2²), c1=l3
+
+# Şekil faktörü (Eq. 8)
+Ψ = ((a1+b1)/(2c1)) × (a1×b1×c1/V)
+
+# Karakteristik uzunluk
+L = √(a1² + b1²)
+
+# Modified Reynolds & Drag Coefficient
+R* = w × ρf × L / μf
+CD* = 2×c1×(s-1)×g / w²
+
+# Ampirik bağıntı (Eq. 12, Table 4)
+Ψ×CD* = α × (R*)^β
+```
+
+**Şekil Faktörleri (Ψ):**
+| Şekil | Bizim | Makale |
+|-------|-------|--------|
+| Cube | 3.34 | 2.83 |
+| Cylinder | 4.90 | 3.60 |
+| Wedge | 16.90 | 9.51 |
+| Box | 5.25 | 4-8 |
+
+**Dosya:** `epe_analysis/gogus_fig7_comparison.png`
+
+### Tracking Sistemi
+- **Yöntem:** Background subtraction + Centroid tracking
+- **FPS:** 50
+- **Kalibrasyon:** 28.5 cm kolon yüksekliği
+- **Çıktılar:** dX, dY, Magnitude (px/frame)
+- **NOT:** RAFT optik akış implement edilmemiş (TÜBİTAK planı), ama mevcut yöntem EPE hedefini karşılıyor
