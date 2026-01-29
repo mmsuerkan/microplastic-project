@@ -1,0 +1,42 @@
+{
+  "model_info": {
+    "name": "Balanced Ensemble (RF + NN)",
+    "cv_r2": 0.8590204679169225,
+    "cv_r2_std": 0.035445465503325134,
+    "train_r2": 0.9200086216599553,
+    "overfitting_gap": 0.06098815374303279,
+    "n_samples": 240,
+    "n_features": 9,
+    "date": "2025-01-29"
+  },
+  "feature_columns": [
+    "a",
+    "b",
+    "c",
+    "density",
+    "shape_enc",
+    "volume",
+    "surface_area",
+    "aspect_ratio",
+    "vol_surf_ratio"
+  ],
+  "rf_params": {
+    "n_estimators": 100,
+    "max_depth": 10,
+    "min_samples_leaf": 4,
+    "random_state": 42
+  },
+  "nn_params": {
+    "hidden_layer_sizes": [
+      128
+    ],
+    "alpha": 0.01,
+    "random_state": 42,
+    "max_iter": 2000,
+    "early_stopping": true
+  },
+  "ensemble_weights": {
+    "rf_weight": 0.7,
+    "nn_weight": 0.3
+  }
+}
