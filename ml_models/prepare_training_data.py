@@ -1,7 +1,7 @@
 """
-Training Data Hazırlama - DÜZELTILMIŞ VERSIYON V3
+Training Data Hazırlama - VERSIYON V4
 Excel (parçacık ölçümleri) + JSON (velocity) → Training CSV
-RESIN deneylerinde kod prefixine göre doğru sheet ve şekil seçimi
+Yeni Excel dosyası: ALL PARTICLES MEASUREMENTS (1).xlsx
 """
 import pandas as pd
 import numpy as np
@@ -22,7 +22,7 @@ SHAPE_NAMES = {
     6: 'Elliptic Cylinder'
 }
 
-# Experiments category -> Shape (RESIN hariç, dinamik olacak)
+# Experiments category -> Shape
 CATEGORY_TO_SHAPE = {
     'ABS C': 0, 'PLA C': 0, 'C': 0,
     'ABS HC': 1, 'PLA HC': 1, 'HC': 1,
@@ -32,7 +32,7 @@ CATEGORY_TO_SHAPE = {
     'PS': 6, 'ABS EC': 6,
 }
 
-# Category -> Excel sheet (RESIN ve PA 6 hariç, dinamik olacak)
+# Category -> Excel sheet
 CATEGORY_TO_SHEET = {
     'ABS C': 'ABS CYLINDER',
     'PLA C': 'PLA CYLINDER ',
@@ -44,9 +44,6 @@ CATEGORY_TO_SHEET = {
     'ABS CUBE': 'PLA CUBE ',
     'WSP': 'PMMA Wedge-Shaped',
     'BSP': 'PMMA BSP',
-    # 'PA 6' özel olarak işleniyor (PA6_CODE_MAP ile)
-    'PS': 'RESIN EC',
-    'ABS EC': 'RESIN EC',
 }
 
 # RESIN kod prefixi -> sheet ve shape
@@ -64,9 +61,7 @@ PA6_CODE_MAP = {
     'BSP': ('PA6 BSP ', 4),        # Box Shape Prism
 }
 
-# RESIN category -> Excel type (sheet'e göre farklı)
-# SPHERE, CYLINDER, EC: "RESIN (r=X)" formatı
-# CUBE: "RESIN (a=X)" formatı
+# RESIN category -> Excel type
 RESIN_TYPE_MAP = {
     'RESIN (a=6 r=3)': {
         'RESIN SPHERE': 'RESIN (r=3)',
@@ -267,13 +262,21 @@ def main():
     print("TRAINING DATA HAZIRLAMA - DUZELTILMIS")
     print("=" * 70)
 
-    excel_path = r'c:\Users\mmert\Downloads\ALL PARTICLES MEASUREMENTS-updated.xlsx'
+    excel_path = r'c:\Users\mmert\Downloads\ALL PARTICLES MEASUREMENTS-updated (1).xlsx'
+    wsp_excel_path = r'c:\Users\mmert\Downloads\ALL PARTICLES MEASUREMENTS-updated (3).xlsx'
     json_path = r'C:\Users\mmert\PycharmProjects\ObjectTrackingProject\processed_results\experiments.json'
     output_path = r'C:\Users\mmert\PycharmProjects\ObjectTrackingProject\data\training_data_v2.csv'
 
     # 1. Excel yükle
     print("\n1. Excel yukleniyor...")
     excel_data = load_excel_data(excel_path)
+
+    # WSP density'lerini ayrı dosyadan al
+    print("   WSP density'leri yukleniyor...")
+    wsp_data = load_excel_data(wsp_excel_path)
+    if 'PMMA Wedge-Shaped' in wsp_data:
+        excel_data['PMMA Wedge-Shaped'] = wsp_data['PMMA Wedge-Shaped']
+        print(f"   WSP guncellendi: {len(wsp_data['PMMA Wedge-Shaped'])} parcacik")
     total = sum(len(v) for v in excel_data.values())
     print(f"   Toplam parcacik: {total}")
     for sheet, particles in excel_data.items():
@@ -445,8 +448,49 @@ def main():
         for uc in unmatched_codes[:10]:
             print(f"     - {uc}")
 
-    # 4. Kaydet
+    # 4. Feature'ları hesapla ve kaydet
     df = pd.DataFrame(matched)
+
+    # Volume hesaplama
+    def calc_volume(row):
+        shape = row['shape_enc']
+        a, b, c = row['a'], row['b'], row['c']
+        if shape == 0:  # Cylinder: a=çap, b=yükseklik
+            return np.pi * (a/2)**2 * b if b > 0 else np.pi * (a/2)**2 * a
+        elif shape == 1:  # Half Cylinder
+            return 0.5 * np.pi * (a/2)**2 * b if b > 0 else 0.5 * np.pi * (a/2)**2 * a
+        elif shape == 2:  # Cube
+            return a * b * c if b > 0 and c > 0 else a**3
+        elif shape == 3:  # Wedge
+            return 0.5 * a * b * c if b > 0 and c > 0 else 0.5 * a**3
+        elif shape == 4:  # Box
+            return a * b * c if b > 0 and c > 0 else a**3
+        elif shape == 5:  # Sphere
+            return (4/3) * np.pi * (a/2)**3
+        elif shape == 6:  # Elliptic Cylinder
+            return np.pi * (a/2) * (b/2) * c if b > 0 and c > 0 else np.pi * (a/2)**2 * a
+        return a * b * c if b > 0 and c > 0 else a**3
+
+    def calc_surface_area(row):
+        shape = row['shape_enc']
+        a, b, c = row['a'], row['b'], row['c']
+        if shape == 5:  # Sphere
+            return 4 * np.pi * (a/2)**2
+        elif shape == 0:  # Cylinder: a=çap, b=yükseklik
+            r = a/2
+            h = b if b > 0 else a
+            return 2 * np.pi * r * (r + h)
+        elif shape == 1:  # Half Cylinder
+            r = a/2
+            h = b if b > 0 else a
+            return np.pi * r * (r + h) + 2 * r * h
+        return 2 * (a*b + b*c + a*c) if b > 0 and c > 0 else 6 * a**2
+
+    df['volume'] = df.apply(calc_volume, axis=1)
+    df['surface_area'] = df.apply(calc_surface_area, axis=1)
+    df['aspect_ratio'] = df['a'] / np.where(df['b'] == 0, df['a'], df['b'])
+    df['vol_surf_ratio'] = df['volume'] / np.where(df['surface_area'] == 0, 1, df['surface_area'])
+
     df.to_csv(output_path, index=False)
     print(f"\n4. Kaydedildi: {output_path}")
 
