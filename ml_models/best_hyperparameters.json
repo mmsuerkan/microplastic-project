@@ -1,0 +1,27 @@
+{
+  "rf": {
+    "n_estimators": 50,
+    "min_samples_split": 10,
+    "min_samples_leaf": 1,
+    "max_features": "sqrt",
+    "max_depth": 10
+  },
+  "nn": {
+    "activation": "tanh",
+    "alpha": 0.01,
+    "hidden_layer_sizes": [
+      128,
+      64
+    ],
+    "learning_rate_init": 0.05
+  },
+  "ensemble_weights": {
+    "rf": 0.8,
+    "nn": 0.2
+  },
+  "scores": {
+    "rf_cv_r2": -0.8981304595158296,
+    "nn_cv_r2": -0.08174704334062839,
+    "ensemble_cv_r2": 0.8239504154331438
+  }
+}

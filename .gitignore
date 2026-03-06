@@ -21,6 +21,10 @@ source_videos/
 nul
 *.txt
 !requirements.txt
+*.log
+temp_frames/
+invalidation.json
+dosyalar/
 
 # One-time utility scripts
 copy_videos_to_ssd.py

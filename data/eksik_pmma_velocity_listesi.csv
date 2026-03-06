@@ -1,0 +1,128 @@
+﻿Kategori,Shape,Numara,Excel_Kod,Experiments_Kod,a_mm,b_mm,c_mm,Density_kg_m3,Velocity_Status
+BSP,Box Shape Prism,1,Box-shaped prism-1,BSP-1,4.85,4.84,2.34,1148.5,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,2,Box-shaped prism-2,BSP-2,4.84,4.76,2.85,1127.0,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,3,Box-shaped prism-3,BSP-3,4.81,3.82,2.88,1132.5,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,4,Box-shaped prism-4,BSP-4,4.85,4.81,2.88,1100.7,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,5,Box-shaped prism-5,BSP-5,3.84,2.8,2.32,1081.5,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,7,Box-shaped prism-7,BSP-7,4.88,4.85,2.36,1128.7,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,13,Box-shaped prism-13,BSP-13,4.85,4.84,2.86,1132.6,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,14,Box-shaped prism-14,BSP-14,3.84,3.83,2.85,1097.1,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,15,Box-shaped prism-15,BSP-15,3.86,3.81,2.85,1122.0,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,19,Box-shaped prism-19,BSP-19,4.82,4.8,2.86,1133.5,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,20,Box-shaped prism-20,BSP-20,4.83,4.78,2.87,1132.4,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,22,Box-shaped prism-22,BSP-22,2.86,2.82,2.79,1111.1,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,26,Box-shaped prism-26,BSP-26,4.81,4.77,1.03,1269.5,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,30,Box-shaped prism-30,BSP-30,4.81,4.75,1.04,1222.2,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,32,Box-shaped prism-32,BSP-32,3.76,2.75,1.03,1223.5,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,33,Box-shaped prism-33,BSP-33,4.76,4.76,2.35,1179.4,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,34,Box-shaped prism-34,BSP-34,4.79,3.82,2.82,1130.7,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,35,Box-shaped prism-35,BSP-35,2.85,2.79,2.84,1108.4,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,36,Box-shaped prism-36,BSP-36,2.81,2.84,1.79,1107.4,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,37,Box-shaped prism-37,BSP-37,3.78,2.71,2.85,1178.9,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,38,Box-shaped prism-38,BSP-38,4.75,4.75,2.35,1183.6,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,39,Box-shaped prism-39,BSP-39,2.82,2.32,1.73,1131.2,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,40,Box-shaped prism-40,BSP-40,4.78,4.74,2.33,1182.0,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,41,Box-shaped prism-41,BSP-41,3.83,2.87,2.79,1127.2,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,42,Box-shaped prism-42,BSP-42,3.85,2.8,2.31,1118.0,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,43,Box-shaped prism-43,BSP-43,2.83,2.79,1.76,1152.8,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,44,Box-shaped prism-44,BSP-44,3.73,3.76,2.34,1169.4,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,45,Box-shaped prism-45,BSP-45,3.79,3.75,2.34,1115.1,EKSIK - Ölçüm gerekli
+BSP,Box Shape Prism,48,Box-shaped prism-48,BSP-48,2.88,2.83,1.79,1089.1,EKSIK - Ölçüm gerekli
+C,Cylinder,1,Cylinder-1,C-1,4.8,4.8,0.98,1578.5,EKSIK - Ölçüm gerekli
+C,Cylinder,2,Cylinder-2,C-2,4.84,4.84,1.01,1514.0,EKSIK - Ölçüm gerekli
+C,Cylinder,3,Cylinder-3,C-3,4.79,4.79,1.02,1542.3,EKSIK - Ölçüm gerekli
+C,Cylinder,4,Cylinder-4,C-4,4.77,4.77,2.85,1438.5,EKSIK - Ölçüm gerekli
+C,Cylinder,5,Cylinder-5,C-5,4.81,4.81,2.82,1427.8,EKSIK - Ölçüm gerekli
+C,Cylinder,6,Cylinder-6,C-6,3.84,3.84,2.86,1372.7,EKSIK - Ölçüm gerekli
+C,Cylinder,7,Cylinder-7,C-7,2.82,2.82,2.32,1414.6,EKSIK - Ölçüm gerekli
+C,Cylinder,8,Cylinder-8,C-8,1.82,1.82,2.33,1380.2,EKSIK - Ölçüm gerekli
+C,Cylinder,9,Cylinder-9,C-9,3.79,3.79,2.28,1431.9,EKSIK - Ölçüm gerekli
+C,Cylinder,10,Cylinder-10,C-10,2.79,2.79,2.31,1458.1,EKSIK - Ölçüm gerekli
+C,Cylinder,12,Cylinder-12,C-12,2.86,2.86,2.32,1367.6,EKSIK - Ölçüm gerekli
+C,Cylinder,17,Cylinder-17,C-17,4.75,4.75,1.0,1583.6,EKSIK - Ölçüm gerekli
+C,Cylinder,20,Cylinder-20,C-20,2.81,2.81,1.02,1537.7,EKSIK - Ölçüm gerekli
+C,Cylinder,21,Cylinder-21,C-21,3.47,3.47,2.89,1718.0,EKSIK - Ölçüm gerekli
+C,Cylinder,26,Cylinder-26,C-26,3.82,3.82,2.83,1407.6,EKSIK - Ölçüm gerekli
+C,Cylinder,28,Cylinder-28,C-28,3.83,3.83,2.84,1391.2,EKSIK - Ölçüm gerekli
+C,Cylinder,31,Cylinder-31,C-31,2.8,2.8,2.92,1400.4,EKSIK - Ölçüm gerekli
+C,Cylinder,32,Cylinder-32,C-32,4.82,4.82,2.31,1415.3,EKSIK - Ölçüm gerekli
+C,Cylinder,33,Cylinder-33,C-33,2.8,2.8,1.0,1603.1,EKSIK - Ölçüm gerekli
+C,Cylinder,34,Cylinder-34,C-34,1.84,1.84,2.89,1313.1,EKSIK - Ölçüm gerekli
+C,Cylinder,35,Cylinder-35,C-35,2.83,2.83,2.31,1416.7,EKSIK - Ölçüm gerekli
+C,Cylinder,36,Cylinder-36,C-36,2.84,2.84,2.32,1365.1,EKSIK - Ölçüm gerekli
+C,Cylinder,37,Cylinder-37,C-37,2.81,2.81,2.93,1390.0,EKSIK - Ölçüm gerekli
+C,Cylinder,38,Cylinder-38,C-38,3.81,3.81,0.99,1571.0,EKSIK - Ölçüm gerekli
+C,Cylinder,39,Cylinder-39,C-39,2.82,2.82,2.89,1400.9,EKSIK - Ölçüm gerekli
+C,Cylinder,40,Cylinder-40,C-40,4.79,4.79,1.0,1594.8,EKSIK - Ölçüm gerekli
+C,Cylinder,41,Cylinder-41,C-41,1.82,1.82,2.89,1398.1,EKSIK - Ölçüm gerekli
+C,Cylinder,42,Cylinder-42,C-42,3.82,3.82,0.99,1572.7,EKSIK - Ölçüm gerekli
+C,Cylinder,43,Cylinder-43,C-43,1.77,1.77,1.0,1483.4,EKSIK - Ölçüm gerekli
+C,Cylinder,44,Cylinder-44,C-44,1.77,1.77,0.98,1564.0,EKSIK - Ölçüm gerekli
+C,Cylinder,45,Cylinder-45,C-45,4.78,4.78,1.01,1568.8,EKSIK - Ölçüm gerekli
+C,Cylinder,46,Cylinder-46,C-46,1.78,1.78,2.88,1518.7,EKSIK - Ölçüm gerekli
+C,Cylinder,47,Cylinder-47,C-47,0.76,0.76,2.89,1306.6,EKSIK - Ölçüm gerekli
+C,Cylinder,48,Cylinder-48,C-48,4.8,4.8,2.3,1446.2,EKSIK - Ölçüm gerekli
+C,Cylinder,50,Cylinder-50,C-50,2.8,2.8,2.31,1431.8,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,1,Elliptical Half Cylinder-1,HC-1,4.78,4.78,2.31,1125.9,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,2,Elliptical Half Cylinder-2,HC-2,4.77,4.77,2.88,1117.5,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,3,Elliptical Half Cylinder-3,HC-3,4.72,4.72,2.32,1120.1,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,4,Elliptical Half Cylinder-4,HC-4,4.77,4.77,2.89,1161.4,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,5,Elliptical Half Cylinder-5,HC-5,4.66,4.66,2.35,1174.6,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,8,Elliptical Half Cylinder-8,HC-8,4.74,4.74,2.35,1117.6,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,9,Elliptical Half Cylinder-9,HC-9,3.74,3.74,2.84,1140.8,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,10,Elliptical Half Cylinder-10,HC-10,3.72,3.72,2.84,1154.2,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,13,Elliptical Half Cylinder-13,HC-13,3.71,3.71,2.29,1131.1,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,17,Elliptical Half Cylinder-17,HC-17,3.63,3.63,2.29,1156.1,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,18,Elliptical Half Cylinder-18,HC-18,3.75,3.75,2.29,1124.6,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,19,Elliptical Half Cylinder-19,HC-19,3.68,3.68,2.28,1157.9,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,20,Elliptical Half Cylinder-20,HC-20,3.7,3.7,2.28,1151.0,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,23,Elliptical Half Cylinder-23,HC-23,2.74,2.74,2.29,1095.6,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,25,Elliptical Half Cylinder-25,HC-25,4.74,4.74,1.02,1243.6,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,27,Elliptical Half Cylinder-27,HC-27,4.71,4.71,0.99,1318.5,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,28,Elliptical Half Cylinder-28,HC-28,4.73,4.73,0.99,1257.9,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,29,Elliptical Half Cylinder-29,HC-29,3.76,3.76,0.98,1281.9,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,30,Elliptical Half Cylinder-30,HC-30,1.7,1.7,2.89,1336.2,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,32,Elliptical Half Cylinder-32,HC-32,2.71,2.71,1.0,1272.6,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,33,Elliptical Half Cylinder-33,HC-33,1.66,1.66,2.86,1048.0,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,34,Elliptical Half Cylinder-34,HC-34,3.74,3.74,1.01,1297.5,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,35,Elliptical Half Cylinder-35,HC-35,2.83,2.83,1.01,1281.9,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,36,Elliptical Half Cylinder-36,HC-36,1.65,1.65,2.88,1174.6,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,37,Elliptical Half Cylinder-37,HC-37,3.7,3.7,1.02,1269.2,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,38,Elliptical Half Cylinder-38,HC-38,4.71,4.71,1.02,1268.0,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,39,Elliptical Half Cylinder-39,HC-39,3.7,3.7,1.0,1268.9,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,40,Elliptical Half Cylinder-40,HC-40,1.68,1.68,2.86,1173.8,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,43,Elliptical Half Cylinder-43,HC-43,3.66,3.66,1.04,1170.7,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,45,Elliptical Half Cylinder-45,HC-45,1.61,1.61,2.17,1283.9,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,48,Elliptical Half Cylinder-48,HC-48,2.65,2.65,2.29,1113.8,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,49,Elliptical Half Cylinder-49,HC-49,4.63,4.63,2.88,1158.0,EKSIK - Ölçüm gerekli
+HC,Half Cylinder,50,Elliptical Half Cylinder-50,HC-50,1.7,1.7,1.71,628.4,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,1,Wedge-Shaped-1,WSP-1,4.14,1.61,2.83,1236.0,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,2,Wedge-Shaped-2,WSP-2,3.49,3.52,2.35,1236.1,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,3,Wedge-Shaped-3,WSP-3,3.47,3.53,2.36,1211.9,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,4,Wedge-Shaped-4,WSP-4,3.55,3.48,2.83,1235.7,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,5,Wedge-Shaped-5,WSP-5,3.51,3.46,2.85,1238.0,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,8,Wedge-Shaped-8,WSP-8,3.47,3.49,2.36,1246.2,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,10,Wedge-Shaped-10,WSP-10,3.56,3.52,2.85,1156.8,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,11,Wedge-Shaped-11,WSP-11,4.03,1.61,2.85,1285.5,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,13,Wedge-Shaped-13,WSP-13,4.17,1.65,2.86,1189.1,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,14,Wedge-Shaped-14,WSP-14,4.21,1.59,2.36,1251.5,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,16,Wedge-Shaped-16,WSP-16,4.31,1.62,2.34,1243.3,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,17,Wedge-Shaped-17,WSP-17,4.03,1.65,2.86,1262.4,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,19,Wedge-Shaped-19,WSP-19,4.04,1.6,2.85,1269.0,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,22,Wedge-Shaped-22,WSP-22,3.58,3.44,2.85,1174.1,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,23,Wedge-Shaped-23,WSP-23,4.18,1.6,2.33,1331.8,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,24,Wedge-Shaped-24,WSP-24,3.16,1.61,2.85,1249.8,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,25,Wedge-Shaped-25,WSP-25,2.46,2.53,2.37,1191.5,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,29,Wedge-Shaped-29,WSP-29,4.1,1.71,1.08,1267.8,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,31,Wedge-Shaped-31,WSP-31,2.43,1.64,1.07,1267.2,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,32,Wedge-Shaped-32,WSP-32,2.38,1.74,1.12,1295.0,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,33,Wedge-Shaped-33,WSP-33,2.48,1.61,2.38,1242.6,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,34,Wedge-Shaped-34,WSP-34,3.27,1.61,2.84,1301.5,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,35,Wedge-Shaped-35,WSP-35,3.48,3.47,1.04,1261.0,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,36,Wedge-Shaped-36,WSP-36,2.51,1.6,2.39,1269.4,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,37,Wedge-Shaped-37,WSP-37,2.49,2.5,1.02,1261.0,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,38,Wedge-Shaped-38,WSP-38,4.42,1.69,1.02,1235.3,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,39,Wedge-Shaped-39,WSP-39,2.49,2.51,1.06,1266.2,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,40,Wedge-Shaped-40,WSP-40,3.32,1.69,2.85,1151.6,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,43,Wedge-Shaped-43,WSP-43,3.42,3.53,1.08,1222.2,EKSIK - Ölçüm gerekli
+WSP,Wedge Shape Prism,45,Wedge-Shaped-45,WSP-45,1.6,4.19,2.34,1262.4,EKSIK - Ölçüm gerekli

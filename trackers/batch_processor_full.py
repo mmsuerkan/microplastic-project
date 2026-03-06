@@ -153,7 +153,8 @@ def get_processed_experiments(processed_dir):
     """Islenmis deneylerin listesini dondur"""
     processed = set()
     for root, dirs, files in os.walk(processed_dir):
-        if 'output_video.mp4' in files:
+        # summary.csv kontrol et (output_video.mp4 gitignore'da, Git'e eklenmemis olabilir)
+        if 'summary.csv' in files:
             parts = root.replace('\\', '/').split('/')
             for i, p in enumerate(parts):
                 if p in ['success', 'fail']:
