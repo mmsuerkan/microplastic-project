@@ -1,0 +1,5 @@
+model,n_particles,n_features,cv_r2,cv_std,train_r2,overfit_gap
+Baseline RF (merged),161,9,0.7284,0.0726,0.8656,0.1372
+Baseline Ensemble (merged),161,9,0.7381,0.0771,0.8606,0.1226
+3D Enhanced Ensemble (merged),161,12,0.7263,0.0621,0.8772,0.1509
+Baseline Ensemble (full 240),240,9,0.859,0.0354,0.92,0.061
