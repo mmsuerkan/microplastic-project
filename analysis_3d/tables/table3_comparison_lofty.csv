@@ -1,0 +1,11 @@
+Metric,Lofty et al. (2026),This Study
+Number of particles,127,105
+Camera setup,"2 cameras, 90 deg, 60 fps","2 cameras, 90 deg, 50 fps"
+Column geometry,Rectangular 20x20x70 cm,"Cylindrical, dia 30 cm"
+Particle density,Not measured,Known (1007-1455 kg/m3)
+Particle shapes,4 types (Zingg classification),6 types (geometric)
+Repeats per particle,Mostly 1,Up to 3
+d_eq range (mm),0.40 - 1.86,1.84 - 9.25
+Re_p range,Not reported clearly,87 - 2467
+ML settling velocity prediction,None,R2 = 0.859
+3D trajectory reconstruction,Yes,Yes
