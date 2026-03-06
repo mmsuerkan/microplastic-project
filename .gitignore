@@ -23,6 +23,7 @@ nul
 !requirements.txt
 *.log
 temp_frames/
+temp_convert/
 invalidation.json
 dosyalar/
 
