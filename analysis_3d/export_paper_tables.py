@@ -62,9 +62,12 @@ SHAPE_ORDER = [
 # TABLE 1: Particle Properties Summary
 # ===========================================================================
 # We want per-particle properties (not per-experiment), so we take unique
-# particles by (code, shape_name).  Dimensions and density are the same
-# across repeats for the same particle.
-particles = df.drop_duplicates(subset=["code"]).copy()
+# particles by (code, category).  The same naming code (e.g. "C-1") is reused
+# across different polymer/shape categories for PHYSICALLY DISTINCT particles
+# (different dimensions and densities), so deduplicating on "code" alone would
+# merge them and undercount.  Dimensions and density are constant within a
+# (code, category) group across its repeats.
+particles = df.drop_duplicates(subset=["code", "category"]).copy()
 
 rows_t1 = []
 for shape in SHAPE_ORDER:
@@ -97,9 +100,11 @@ print_table("Table 1: Particle Properties Summary", table1)
 # ===========================================================================
 # TABLE 2: 3D Settling Metrics by Shape
 # ===========================================================================
-# First average per particle (code), then summarise per shape.
-# This avoids over-representing particles with more repeats.
-per_particle = df.groupby(["code", "shape_name"]).agg(
+# First average per particle (code, category), then summarise per shape.
+# Grouping by (code, shape_name) alone would merge distinct particles that
+# share a code and shape but differ in polymer/category (e.g. PLA vs PA6
+# cylinders both named "C-1"), so category must be part of the key.
+per_particle = df.groupby(["code", "category", "shape_name"]).agg(
     w_mean=("settling_velocity_cm_s", "mean"),
     V_h_mean=("horizontal_drift_velocity_cm_s", "mean"),
     drift_norm_mean=("drift_normalized", "mean"),
@@ -148,7 +153,7 @@ d_eq_mm_min = df["d_eq_cm"].min() * 10
 d_eq_mm_max = df["d_eq_cm"].max() * 10
 re_min = df["reynolds_number"].min()
 re_max = df["reynolds_number"].max()
-n_particles_ours = particles["code"].nunique()
+n_particles_ours = len(particles)  # unique (code, category) particles
 
 # Load ML best result
 ml_df = pd.read_csv(ML_COMPARISON)
