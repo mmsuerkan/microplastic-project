@@ -1,9 +1,25 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import Login from './Login'
 
 const S3_BASE_URL = "https://microplastic-experiments.s3.us-east-1.amazonaws.com"
 
+// Site sifresi - degistirmek icin sadece bu satiri duzenleyin.
+const SITE_PASSWORD = "microtrack2026"
+
 function App() {
+  const [authed, setAuthed] = useState(() => localStorage.getItem('microtrack_auth') === 'ok')
+
+  const handleLogin = () => {
+    localStorage.setItem('microtrack_auth', 'ok')
+    setAuthed(true)
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('microtrack_auth')
+    setAuthed(false)
+  }
+
   const [experiments, setExperiments] = useState([])
   const [stats, setStats] = useState({ total: 0, success: 0, fail: 0 })
   const [selected, setSelected] = useState(null)
@@ -137,6 +153,7 @@ function App() {
     URL.revokeObjectURL(url)
   }
 
+  if (!authed) return (<Login password={SITE_PASSWORD} onSuccess={handleLogin} />)
   if (loading) return (<div className="loading-screen"><div className="loader"></div><p>Veriler yukleniyor...</p></div>)
   if (error) return (<div className="error-screen"><h2>Baglanti Hatasi</h2><p>{error}</p></div>)
 
@@ -147,12 +164,15 @@ function App() {
           <div className="logo"><span className="logo-icon">◉</span><span className="logo-text">MicroTrack</span></div>
           <span className="header-subtitle">Mikroplastik Deney Analiz Sistemi</span>
         </div>
-        <div className="stats-bar">
-          <div className="stat-item total"><span className="stat-value">{effectiveStats.total}</span><span className="stat-label">Toplam</span></div>
-          <div className="stat-item success"><span className="stat-value">{effectiveStats.success}</span><span className="stat-label">Basarili</span><span className="stat-percent">{effectiveStats.total > 0 ? ((effectiveStats.success/effectiveStats.total)*100).toFixed(0) : 0}%</span></div>
-          <div className="stat-item fail"><span className="stat-value">{effectiveStats.fail}</span><span className="stat-label">Basarisiz</span><span className="stat-percent">{effectiveStats.total > 0 ? ((effectiveStats.fail/effectiveStats.total)*100).toFixed(0) : 0}%</span></div>
-          {overrideCount > 0 && (<div className="stat-item override"><span className="stat-value">{overrideCount}</span><span className="stat-label">Duzeltme</span><button className="export-override-btn" onClick={exportOverrides} title="Duzeltmeleri indir">↓</button></div>)}
-          {reanalyzeCount > 0 && (<div className="stat-item reanalyze"><span className="stat-value">{reanalyzeCount}</span><span className="stat-label">Tekrar Analiz</span><button className="export-reanalyze-btn" onClick={exportReanalyzeList} title="Listeyi indir">↓</button></div>)}
+        <div className="header-right">
+          <div className="stats-bar">
+            <div className="stat-item total"><span className="stat-value">{effectiveStats.total}</span><span className="stat-label">Toplam</span></div>
+            <div className="stat-item success"><span className="stat-value">{effectiveStats.success}</span><span className="stat-label">Basarili</span><span className="stat-percent">{effectiveStats.total > 0 ? ((effectiveStats.success/effectiveStats.total)*100).toFixed(0) : 0}%</span></div>
+            <div className="stat-item fail"><span className="stat-value">{effectiveStats.fail}</span><span className="stat-label">Basarisiz</span><span className="stat-percent">{effectiveStats.total > 0 ? ((effectiveStats.fail/effectiveStats.total)*100).toFixed(0) : 0}%</span></div>
+            {overrideCount > 0 && (<div className="stat-item override"><span className="stat-value">{overrideCount}</span><span className="stat-label">Duzeltme</span><button className="export-override-btn" onClick={exportOverrides} title="Duzeltmeleri indir">↓</button></div>)}
+            {reanalyzeCount > 0 && (<div className="stat-item reanalyze"><span className="stat-value">{reanalyzeCount}</span><span className="stat-label">Tekrar Analiz</span><button className="export-reanalyze-btn" onClick={exportReanalyzeList} title="Listeyi indir">↓</button></div>)}
+          </div>
+          <button className="logout-btn" onClick={handleLogout} title="Cikis yap">⏻ Cikis</button>
         </div>
       </header>
 
